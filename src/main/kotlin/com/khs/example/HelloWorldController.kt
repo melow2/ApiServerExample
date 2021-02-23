@@ -7,5 +7,8 @@ import org.springframework.web.bind.annotation.RestController
 class HelloWorldController {
     // GET
     // /hello-world (endpoint)
-    @GetMapping("")
+    @GetMapping("/hello-world-bean")
+    fun helloWorldBean(): HelloWorldBean {
+        return HelloWorldBean("test")
+    }
 }
