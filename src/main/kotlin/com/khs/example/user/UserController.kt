@@ -1,7 +1,10 @@
 package com.khs.example.user
 
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider
 import com.khs.example.user.exception.UserNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.converter.json.MappingJacksonValue
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
@@ -12,7 +15,14 @@ class UserController {
     private lateinit var service: UserDaoService
 
     @GetMapping("/users")
-    fun retrieveAllUsers(): List<User> = service.findAll()
+    fun retrieveAllUsers(): MappingJacksonValue {
+        val users =  service.findAll()
+        val filter = SimpleBeanPropertyFilter.filterOutAllExcept("id","name","joinDate")
+        val filters = SimpleFilterProvider().addFilter("User",filter)
+        val mapping = MappingJacksonValue(users)
+        mapping.filters = filters
+        return mapping
+    }
 
     @PostMapping("/users")
     fun createUser(@RequestBody @Validated user: User) {

@@ -39,9 +39,9 @@ class UserDaoService {
 
     companion object {
         private val users = ArrayList<User>().apply {
-            add(User(1, "Kevin", Date()))
-            add(User(2, "Lonely", Date()))
-            add(User(3, "Happy", Date()))
+            add(User(1, "ddd","Kevin", Date()))
+            add(User(2, "ddd", "Lonely", Date()))
+            add(User(3,  "ddd","Happy", Date()))
         }
     }
 
