@@ -14,7 +14,7 @@ class UserController {
     @Autowired
     private lateinit var service: UserDaoService
 
-    @GetMapping("/users")
+    @GetMapping("/main/users")
     fun retrieveAllUsers(): MappingJacksonValue {
         val users =  service.findAll()
         val filter = SimpleBeanPropertyFilter.filterOutAllExcept("id","name","joinDate")
@@ -24,19 +24,19 @@ class UserController {
         return mapping
     }
 
-    @PostMapping("/users")
+    @PostMapping("/main/users")
     fun createUser(@RequestBody @Validated user: User) {
         val savedUser = service.save(user)
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/main/users/{id}")
     fun retrieveUser(@PathVariable id: Int): User? {
         val findUser = service.findOne(id)
         if (findUser == null) throw UserNotFoundException(String.format("ID[%s] not found", id))
         else return findUser
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/main/users/{id}")
     fun deleteUser(@PathVariable id:Int): User? {
         val findUser = service.delete(id)
         if (findUser == null) throw Exception(String.format("ID[%s] not found", id))
